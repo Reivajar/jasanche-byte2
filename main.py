@@ -18,7 +18,7 @@ JINJA_ENVIRONMENT = jinja2.Environment(
 # this is used for constructing URLs to google's APIS
 from googleapiclient.discovery import build
 
-API_KEY = AIzaSyDEvexqbZDpzFw2Inmoa1sRAWIyIqYapVM
+API_KEY = 'AIzaSyDEvexqbZDpzFw2Inmoa1sRAWIyIqYapVM'
 
 # This uses discovery to create an object that can talk to the 
 # fusion tables API using the developer key
