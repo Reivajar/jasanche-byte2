@@ -10,6 +10,11 @@ import logging
 import json
 import urllib
 
+JINJA_ENVIRONMENT = jinja2.Environment(
+    loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
+    extensions=['jinja2.ext.autoescape'],
+    autoescape=True)
+
 # this is used for constructing URLs to google's APIS
 from googleapiclient.discovery import build
 
@@ -17,7 +22,11 @@ from googleapiclient.discovery import build
 # fusion tables API using the developer key
 service = build('fusiontables', 'v1', developerKey=API_KEY)
 
+API_KEY = AIzaSyDEvexqbZDpzFw2Inmoa1sRAWIyIqYapVM
+
 TABLE_ID = '17xpBND6OU2obf5e1zUfkdzjTvx_OYIm8lS7FHJ81'
+
+request = service.column().list(tableId=TABLE_ID)
 
 # Note: We don't need to call run() since our application is embedded within
 # the App Engine WSGI application server.
@@ -25,11 +34,12 @@ TABLE_ID = '17xpBND6OU2obf5e1zUfkdzjTvx_OYIm8lS7FHJ81'
 
 @app.route('/')
 def hello():
-    """Return a friendly HTTP greeting."""
-    return 'Hello World!'
+    template = JINJA_ENVIRONMENT.get_template('templates/index.html')
+    return template.render()
 
 
 @app.errorhandler(404)
 def page_not_found(e):
     """Return a custom 404 error."""
     return 'Sorry, nothing at this URL.', 404
+
